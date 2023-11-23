@@ -26,19 +26,16 @@ public class KakaoAddressSearchService {
 
     public KakaoApiResponseDto requestAddressSearch(String address) {
 
-        if (ObjectUtils.isEmpty(address)) return null;
+        if(ObjectUtils.isEmpty(address)) return null;
 
         URI uri = kakaoUriBuilderService.buildUriByAddressSearch(address);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.AUTHORIZATION, "KakaoAk" +kakaoRestApiKey);
+        headers.set(HttpHeaders.AUTHORIZATION, "KakaoAK " +kakaoRestApiKey);
         HttpEntity httpEntity = new HttpEntity<>(headers);
-
 
         // Call kakao api
         return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, KakaoApiResponseDto.class).getBody();
-
-
     }
 
 }
