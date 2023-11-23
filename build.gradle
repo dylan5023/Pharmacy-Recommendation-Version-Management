@@ -38,6 +38,10 @@ dependencies {
     // Required to create a class-based spock mock at runtime
     testImplementation('net.bytebuddy:byte-buddy:1.12.10')
 
+    // testcontainers
+    testImplementation 'org.testcontainers:spock:1.17.1'
+    testImplementation 'org.testcontainers:mariadb:1.17.1'
+
 
 }
 
