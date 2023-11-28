@@ -1,21 +1,22 @@
 plugins {
-    id 'java'
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+    id 'java'
     id 'groovy'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-
-java {
-    sourceCompatibility = '11'
-}
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+}
+
+bootJar {
+    archiveFileName = 'app.jar'
 }
 
 repositories {
@@ -30,6 +31,9 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     // https://github.com/seruco/base62
     implementation 'io.seruco.encoding:base62:0.1.3'
@@ -54,18 +58,17 @@ dependencies {
     // mockWebServer
     testImplementation('com.squareup.okhttp3:okhttp:4.10.0')
     testImplementation('com.squareup.okhttp3:mockwebserver:4.10.0')
-
-
-}
-
-tasks.named('bootBuildImage') {
-    builder = 'paketobuildpacks/builder-jammy-base:latest'
-}
-
-bootJar {
-    archiveFileName = 'app.jar'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// Create a jar file by fully testing and building with the $ ./gradlew clean build -PKAKAO_REST_API_KEY={api key value} command
+processTestResources {
+    boolean hasProperty = project.hasProperty("KAKAO_REST_API_KEY")
+    System.out.println("Set kakao rest api key: $hasProperty")
+    filesMatching('**/application.yml') {
+        expand(project.properties)
+    }
 }
