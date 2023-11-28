@@ -29,7 +29,7 @@ public class KakaoUriBuilderService {
 
     public URI buildUriByCategorySearch(double latitude, double longitude, double radius, String category) {
 
-        // chane to mm
+        // change to mm
         double meterRadius = radius * 1000;
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(KAKAO_LOCAL_CATEGORY_SEARCH_URL);
