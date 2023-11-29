@@ -35,6 +35,9 @@ dependencies {
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     // https://github.com/seruco/base62
     implementation 'io.seruco.encoding:base62:0.1.3'
 
