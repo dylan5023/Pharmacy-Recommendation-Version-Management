@@ -32,21 +32,21 @@ Directions to the recommended pharmacies are provided via [Kakao Maps and Roadvi
 sequenceDiagram
     actor Requester
     participant System
-    Participant Redis
-    Participant DB
+    participant Redis
+    participant DB
     Requester->>System: Enter your address to request
     System->>Kakao_Api: Request to convert address to latitude and longitude
     System->>Redis: Request to redis Pharmacy status data
     activate Redis
+    Redis-->>System: Return pharmacy data
+    deactivate Redis
     System->>DB: [Failover] Request to DB in case of Redis error
-    deactivate redis
     activate DB
-    
-    DB->>System: Extract from the 3 nearest pharmacies
+    DB-->>System: Extract from the 3 nearest pharmacies
     System->>DB: Save the directions URL (pharmacy directions information)
     deactivate DB
-
     System->>Requester: Provides directions to recommended pharmacies
+
 
 ```
 
